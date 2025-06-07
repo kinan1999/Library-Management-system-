@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Available Books</h2>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Year</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    {% for _, book in books.iterrows() %}
+    <tr>
+        <td>{{ book['title'] }}</td>
+        <td>{{ book['author'] }}</td>
+        <td>{{ book['year'] }}</td>
+        <td>{{ book['status'] }}</td>
+        <td>
+            {% if book['status'] == 'available' %}
+            <a href="{{ url_for('borrow', id=book['id']) }}">Borrow</a>
+            {% else %}
+            <a href="{{ url_for('return_book', id=book['id']) }}">Return</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
